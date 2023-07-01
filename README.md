@@ -1,5 +1,5 @@
 # eztemplate
-Tool to replace text in defined templates.  
+Tool to replace text in defined templates. 
 
 ## Recomended special characters: ǂ, ƺ, ȡ
 Source: https://en.wikipedia.org/wiki/List_of_Unicode_characters
