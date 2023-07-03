@@ -7,6 +7,8 @@ Special characters to define your variables in your template: ǂ, ƺ, ȡ
 We have a template that has the following words to replace: candidate, place, time, company.   
 We notice that each word starts with this special character (ǂ)
 
+> We can use the compiled app in the same way: [Windows](/dist/eztemplate.exe)
+
 [email-template.txt](email-template.txt)
 ```
 Hello ǂcandidate how are you?
