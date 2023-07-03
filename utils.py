@@ -10,4 +10,4 @@ def remove_punctuation(text: str) -> str:
         return text
     else:
         translator = str.maketrans("", "", string.punctuation)
-        return text.translate(translator)
+        return text.translate(translator).strip()
