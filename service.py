@@ -2,7 +2,7 @@ import os
 import subprocess
 from rich import print
 
-from utils import remove_punctuation, read_text
+from utils import remove_punctuation, read_text, read_csv
 
 
 def replace_text(file_path: str, new_values: list, char: str) -> str:
@@ -27,21 +27,25 @@ def replace_text(file_path: str, new_values: list, char: str) -> str:
     return final_text
 
 
-def export_file(file_path: str, text: str):
+def export_file(file_path: str, text: str, file_name: str=None, start_file=True):
     """
     Export the text into a .txt file with the suffix of _replaced
     in the same folder.
     :param file_path: Path of the file to export
     :param text: Text to export
     """
-    name, ext = file_path.split(".")
-    new_file = name + "_replaced." + ext
-    with open(new_file, "w", encoding="utf-8") as file:
+    if not file_name:
+        name, ext = file_path.split(".")
+        file_name = name +"_replaced." + ext
+    else:
+        file_name += ".txt"
+    with open(file_name, "w", encoding="utf-8") as file:
         file.write(text)
         print(
             ":rocket::rocket: Your [blue]file[/blue] has been exported! :rocket::rocket:"
         )
-    open_file(new_file)
+    if start_file:
+        open_file(file_name)
 
 
 def open_file(file_path: str) -> None:
@@ -51,16 +55,14 @@ def open_file(file_path: str) -> None:
         subprocess.run(["open", file_path])
 
 
-def replace_text_from_csv(csv_path: str, char: str) -> None:
+def replace_text_from_csv(csv_path: str, template_path: str, char: str, index: int = 0) -> None:
     """
     Replace the text in the file with the values in the csv file.
     :param csv_path: Path of the csv file
     :param char: Character to search in the file
     """
-    values = []
-    with open(csv_path, "r") as file:
-        for line in file:
-            values.append(line.strip())
-    file_path = input("Enter the path of the file to replace: ")
-    text = replace_text(file_path, values, char)
-    export_file(file_path, text)
+    for i, line in enumerate(read_csv(csv_path)):
+        sufix = line[index]
+        if i != 0: # Skipping the csv header
+            new_text = replace_text(template_path, line, char)
+            export_file(template_path, new_text, "message_"+ sufix, False)
