@@ -59,10 +59,15 @@ def replace_text_from_csv(csv_path: str, template_path: str, char: str, index: i
     """
     Replace the text in the file with the values in the csv file.
     :param csv_path: Path of the csv file
-    :param char: Character to search in the file
+    :param template_path: Path of the .txt template
+    :param char: Character to search in the template
+    :param index: Column number to form the output file name
     """
     for i, line in enumerate(read_csv(csv_path)):
-        sufix = line[index]
-        if i != 0: # Skipping the csv header
-            new_text = replace_text(template_path, line, char)
-            export_file(template_path, new_text, "message_"+ sufix, False)
+        try:
+            sufix = remove_punctuation(line[index])
+            if i != 0: # Skipping the csv header
+                new_text = replace_text(template_path, line, char)
+                export_file(template_path, new_text, "message_"+ sufix, False)
+        except IndexError:
+            raise ValueError(f"Index out of range. Pick one from: 1 to {len(line)}")
