@@ -3,8 +3,6 @@ CLI Tool to replace text in defined templates.
 Special characters to define your variables in your template: ǂ, ƺ, ȡ
 > We are only using this special characters to avoid problems with another common one that may cause problems processing the text.
 
-## Example
-
 ## `text` command
 We have a template that has the following words to replace: candidate, place, time, company.
 We notice that each word starts with this special character (ǂ)
@@ -54,9 +52,9 @@ ACME.
 - `-v` list of new values.
 
 ## `csv` command
-As before, we need a [template](test.txt) with defined targets. For this example we will use the template provided in the docs, also we need a [.csv file](sample.csv) that will contain the values that we want to replace in the template.
+As before, we need a [template](template.txt) with defined targets. For this example we will use the template provided in the docs, also we need a [.csv file](new-values.csv) that will contain the values that we want to replace in the template.
 
-This command will take this new values from the csv, replace in the template and generate a .txt file with the prefix of `_message`  and the sufix of the value that is in the first column in the same path that we have the template.
+This command will take this new values from the csv, replace in the template and generate a .txt file with the prefix of `message_`  and the suffix of the value that is in the first column in the same path that we have the template.
 
 |col1|col2|
 |-----|-----|
@@ -66,7 +64,7 @@ This command will take this new values from the csv, replace in the template and
 
 E.g.
 ```
-$ python main.py csv -f test.txt -c ǂ -csv sample.csv
+$ python main.py csv -f template.txt -c ǂ -csv new-values.csv
 🚀🚀 Your file has been exported! 🚀🚀
 🚀🚀 Your file has been exported! 🚀🚀
 🚀🚀 Your file has been exported! 🚀🚀
@@ -75,22 +73,25 @@ Or if we want to interact with the console:
 ```
 $ python main.py csv
 🚀🚀  Welcome to eztemplate!  🚀🚀
-Template path: test.txt
+Template path: template.txt
 Special character (ǂ, ƺ, ȡ): ǂ
-CSV file path: sample.csv
+CSV file path: new-values.csv
 Index of column to generate the new files [0]:
 🚀🚀 Your file has been exported! 🚀🚀
 🚀🚀 Your file has been exported! 🚀🚀
 🚀🚀 Your file has been exported! 🚀🚀
 ```
 Will generate: message_Joe.txt, message_Felix.txt, message_Abe.txt.
-If we want to set the value from another column as sufix we can pass the index flag like:
+If we want to set the value from another column as suffix we can pass the index flag like:
 ```
-$ python main.py csv -f test.txt -c ǂ -csv sample.csv -i 2
+$ python main.py csv -f template.txt -c ǂ -csv new-values.csv -i 2
 ```
-so this will take the values from the column 2 and use it as sufix.
+so this will take the values from the column 2 and use it as suffix.
 ## More examples
 [v0 Examples](docs/v0.md)
 
 ## Requirements
 Python 3.8+
+```
+$ pip install -r requirements.txt
+```
