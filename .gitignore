@@ -16,3 +16,6 @@ __pypackages__/
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+
+# Misc
+.ruff_cache
