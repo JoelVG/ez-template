@@ -27,7 +27,7 @@ def replace_text(file_path: str, new_values: list, char: str) -> str:
     return final_text
 
 
-def export_file(file_path: str, text: str, file_name: str=None, start_file=True):
+def export_file(file_path: str, text: str, file_name: str = None, start_file=True):
     """
     Export the text into a .txt file with the suffix of _replaced
     in the same folder.
@@ -36,7 +36,7 @@ def export_file(file_path: str, text: str, file_name: str=None, start_file=True)
     """
     if not file_name:
         name, ext = file_path.split(".")
-        file_name = name +"_replaced." + ext
+        file_name = name + "_replaced." + ext
     else:
         file_name += ".txt"
     with open(file_name, "w", encoding="utf-8") as file:
@@ -55,7 +55,9 @@ def open_file(file_path: str) -> None:
         subprocess.run(["open", file_path])
 
 
-def replace_text_from_csv(csv_path: str, template_path: str, char: str, index: int = 0) -> None:
+def replace_text_from_csv(
+    csv_path: str, template_path: str, char: str, index: int = 0
+) -> None:
     """
     Replace the text in the file with the values in the csv file.
     :param csv_path: Path of the csv file
@@ -63,11 +65,13 @@ def replace_text_from_csv(csv_path: str, template_path: str, char: str, index: i
     :param char: Character to search in the template
     :param index: Column number to form the output file name
     """
+    if index != 0:
+        index -= 1
     for i, line in enumerate(read_csv(csv_path)):
         try:
             sufix = remove_punctuation(line[index])
-            if i != 0: # Skipping the csv header
+            if i != 0:  # Skipping the csv header
                 new_text = replace_text(template_path, line, char)
-                export_file(template_path, new_text, "message_"+ sufix, False)
+                export_file(template_path, new_text, "message_" + sufix, False)
         except IndexError:
             raise ValueError(f"Index out of range. Pick one from: 1 to {len(line)}")
