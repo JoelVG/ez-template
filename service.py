@@ -3,6 +3,7 @@ import subprocess
 from rich import print
 
 from utils import remove_punctuation, read_text, read_csv
+from security import safe_command
 
 
 def replace_text(file_path: str, new_values: list, char: str) -> str:
@@ -52,7 +53,7 @@ def open_file(file_path: str) -> None:
     try:
         os.startfile(file_path)
     except AttributeError:
-        subprocess.run(["open", file_path])
+        safe_command.run(subprocess.run, ["open", file_path])
 
 
 def replace_text_from_csv(
